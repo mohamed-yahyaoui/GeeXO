@@ -70,7 +70,7 @@ function declarerResultat(resultat) {
 
 }
 
-document.querySelectorAll('.grid-item').forEach(e => e.addEventListener("click", (ev) => {
+document.querySelectorAll('.case').forEach(e => e.addEventListener("click", (ev) => {
     let id = ev.target.id;
     let resultat;
     if (!ev.target.classList.contains('x') && !ev.target.classList.contains('o')) {
