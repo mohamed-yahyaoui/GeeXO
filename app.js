@@ -1,85 +1,152 @@
-var courant;
-let nb_essai;
-var etat;
-let joueur1, joueur2;
-let tableau = document.querySelector('.tableau');
-var gagneAudio = new Audio('audio/gagne.mp3');
-var nulAudio = new Audio('audio/nul.wav')
+/*console.log("bonjour")
 
+var l;
 
-document.querySelector('.bienvenu').addEventListener('submit', initialiser)
+l = [
+    [0, -1, 1],//0
+    [2,1, 1],//1
+    [1, 1, 0],//2
+];
+//->[1,0,0]
 
-function initialiser(ev) {
-    ev.preventDefault();
-    document.querySelector('.bienvenu-container').classList.toggle('cache');
-    joueur1 = ev.target['nom1'].value;
-    joueur2 = ev.target['nom2'].value;
-    demarrer();
+//console.log(l.map((a,i)=>a[i]))
+
+//a=[1,-1,0] , i=0 -> a[0] = 1
+//a=[2,0,1] ,i=1 -> a[1] = 0
+//a=[4,1,0] ,i=2 ->a[2] = 0
+//->[1,0,0]
+// [1,2,4]
+
+if(l.map((a,i)=>a[i]).every(e=>e==1)){
+    console.log('x gagne')
 }
 
-function demarrer() {
-    courant = 1;
-    nb_essai = 1;
-    etat = [
-        [-1, -1, -1],
-        [-1, -1, -1],
-        [-1, -1, -1],
-    ];
-    document.querySelectorAll('.x,.o').forEach(e => e.classList.remove('x', 'o'))
-    document.querySelector('.matrice-jeu').classList.toggle('cache');
-    document.querySelector('.tableau').classList.toggle('cache');
-    tableau.innerHTML = `Tour de ${(courant == 0) ? joueur2 : joueur1}`
+if(l.map((a,i)=>a[i]).every(e=>e==0)){
+    console.log('o gagne')
 }
 
-function redemarrer() {
-    document.querySelector('.resultat-container').classList.toggle('cache')
-    demarrer();
+if(l.map((a,i)=>a[2-i]).every(e=>e==1)){
+    console.log('x gagne')
 }
 
-function verifier() {
-    for (let j = 0; j < 2; j++) {
-        for (let i = 0; i < 3; i++) {
-            if (etat[i].every(e => e == j)) return j;
-            if (etat.map((v, c) => v[i]).every(e => e == j)) return j
-        }
-        if (etat.map((v, c) => v[c]).every(e => e == j)) return j
-        if (etat.map((v, c) => v[v.length - c - 1]).every(e => e == j)) return j;
+if(l.map((a,i)=>a[2-i]).every(e=>e==0)){
+    console.log('o gagne')
+}
+
+
+for(let i=0;i<3;i++){
+    if(l.map(a=>a[i]).every(a => a==1)){
+        console.log('x gagne')
     }
-    if (nb_essai == 9) return 2;
+    if(l.map(a=>a[i]).every(a => a==0)){
+        console.log('o gagne')
+    }
+}
+
+const x = 5;
+
+console.log(x)
+
+
+
+var m = [1, 2, 3]
+//multiplication(1) -> 2
+//[2]
+
+//multiplication(2)->4
+//[2,4]
+
+//multiplication(3)->6
+//[2,4,6]
+var n = m.map((a) => 2 * a);
+//console.log(n)
+//sortie [2, 4, 6]
+
+
+// ['x', 'x', 'x']
+//l.every(condition) => true
+
+// ['x', 'o', 'x']
+//l.every(condition) => false
+
+function test(a){
+    return a == 1
+}
+
+var ligne = [1, 1, 1] //-> true
+
+ligne.every(a => a==1) //->true
+
+///Test pour les lignes
+for (let i = 0; i < 3; i++) {
+    if (l[i][0] == l[i][1] && l[i][1] == l[i][2]) {
+        if (l[i][0] == 0) {
+            console.log('o gagne')
+        }
+        if (l[i][0] == 1) {
+            console.log('x gagne')
+        }
+    }
+}
+
+for(let i=0;i<3;i++){
+    if(l[i].every(a => a==1)){
+        console.log('x gagne')
+    }
+    if(l[i].every(a => a==0)){
+        console.log('o gagne')
+    }
+}
+
+/*
+//Test pour les colonnes
+for(var i=0;i<3;i++){
+    if(l[0][i] == l[1][i] && l[1][i] == l[2][i]){
+        if(l[0][i] == 0){
+            console.log('o gagne')
+        }
+        if(l[0][i] == 1){
+            console.log('x gagne')
+        }
+    }
+}
+
+if(l[0][0]==l[1][1] && l[1][1]==l[2][2]){
+    if(l[0][0] == 0){
+        console.log('o gagne')
+    }
+    if(l[0][0] == 1){
+        console.log('x gagne')
+    }
+}
+
+if(l[0][2]==l[1][1] && l[1][1]==l[2][0]){
+    if(l[1][1] == 0){
+        console.log('o gagne')
+    }
+    if(l[1][1] == 1){
+        console.log('x gagne')
+    }
+}*/
+
+var matrice = [
+    [-1,-1,-1],
+    [-1,-1,-1],
+    [-1,-1,-1],
+]
+
+function verifier(){
+    for(let k=0;k<2;k++){
+        //pour les lignes
+        if(matrice.every(e => e == k)) return k;
+        //pour les colonnes
+        for(let i=0;i<3;i++){
+            if(matrice[i].map(e=>e[i]).every(e => e==k)) return k;
+        }
+        //pour le diagonal
+        if(matrice.map((e,v)=>e[v]).every(e=> e==k)) return k;
+        //pour l'anti-diagonl
+        if(matrice.map((e,v)=>e[2 - v]).every(e=> e==k)) return k;
+    }
     return -1;
 }
-
-function declarerResultat(resultat) {
-    if (resultat == 2) {
-        nulAudio.play();
-        document.querySelector('#resultat').innerHTML = 'Nul !!😞😞'
-    } else {
-        gagneAudio.play();
-        document.querySelector('#resultat').innerHTML =
-            `${(resultat == 0) ? joueur2 : joueur1} gagne !! 🥳🥳`;
-        party.confetti(document.querySelector('body'), {
-            shapes: ["square", "circle", "roundedRectangle"],
-            size: 2,
-            count: 60,
-            spread: 60
-        });
-    }
-    document.querySelector('.matrice-jeu').classList.toggle('cache');
-    document.querySelector('.tableau').classList.toggle('cache');
-    document.querySelector('.resultat-container').classList.toggle('cache')
-
-}
-
-document.querySelectorAll('.case').forEach(e => e.addEventListener("click", (ev) => {
-    let id = ev.target.id;
-    let resultat;
-    if (!ev.target.classList.contains('x') && !ev.target.classList.contains('o')) {
-        ev.target.classList.add((courant == 0) ? 'o' : 'x');
-        etat[Math.floor(id / 3)][id % 3] = courant;
-        resultat = verifier();
-        if (resultat != -1) declarerResultat(resultat);
-        courant = (courant + 1) % 2;
-        tableau.innerHTML = `Tour de ${(courant == 0) ? joueur2 : joueur1}`
-        nb_essai++;
-    }
-}))

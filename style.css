@@ -50,7 +50,7 @@ body{
 }
 
 .x::after{
-    content:"\2A2F";  
+    content:"C";  
     font-size: 72px;
     color: #204c50;
     font-weight: 400; 
